@@ -1,0 +1,560 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+package "autorescate" {
+	class Main {
+		+main(String[] args) : void
+	}
+}
+
+package "autorescate.controller" {
+	class AutoRescateController {
+		-sistema : SistemaAutoRescate
+		+AutoRescateController()
+		+getSistema() : SistemaAutoRescate
+		+registrarCliente(String nombre, String telefono, TipoCliente tipo) : Cliente
+		+registrarTecnico(String nombre, String especialidad, String zona) : Tecnico
+		+registrarUnidad(TipoUnidad tipo, String zona, String placa) : UnidadServicio
+		+crearSolicitud(String clienteId, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+asignarRecursos(String solicitudId, String tecnicoId, String unidadUuid) : void
+		+asignarRecursos(SolicitudServicio solicitud, Tecnico tecnico, UnidadServicio unidad) : void
+		+cambiarEstadoUnidad(String unidadUuid, EstadoUnidad estado) : void
+		+cambiarEstadoUnidad(UnidadServicio unidad, EstadoUnidad estado) : void
+		+cerrarServicio(String solicitudId) : void
+		+cerrarServicio(SolicitudServicio solicitud) : void
+		+registrarKitEnRevision(String descripcion, boolean requiereReposicion) : KitAtencion
+		+retirarUltimoKitRevisado() : KitAtencion
+		+repararUltimoKitEnRevision() : KitAtencion
+		+repararKitEnRevision(KitAtencion kit) : KitAtencion
+		+registrarMovimiento(String detalle) : void
+		+revertirUltimaOperacion() : String
+		+exportarCsv(String ruta) : int
+		+buscarClientes(String texto) : ArregloDinamico<Cliente>
+		+obtenerTecnicosDisponibles() : ArregloDinamico<Tecnico>
+		+obtenerUnidadesDisponibles() : ArregloDinamico<UnidadServicio>
+		+obtenerUnidadesDisponiblesPara(SolicitudServicio solicitud) : ArregloDinamico<UnidadServicio>
+		+obtenerSolicitudesPendientes() : ArregloDinamico<SolicitudServicio>
+		+obtenerSolicitudesEnEjecucion() : ArregloDinamico<SolicitudServicio>
+		+obtenerKitsEnRevision() : ArregloDinamico<KitAtencion>
+		+obtenerKitsPendientesDeReparacion() : ArregloDinamico<KitAtencion>
+		+listarClientes() : String
+		+listarTecnicos() : String
+		+listarTecnicosDisponibles() : String
+		+listarUnidades() : String
+		+listarUnidadesDisponibles() : String
+		+listarPendientesOrdinarios() : String
+		+listarCriticos() : String
+		+listarSolicitudes() : String
+		+listarRecursosPorEstado() : String
+		+listarKitsRevision() : String
+		+listarMovimientos() : String
+		-textoVacio(StringBuilder sb) : String
+	}
+}
+
+package "autorescate.model" {
+	class SistemaAutoRescate {
+		-clientes : ArregloDinamico<Cliente>
+		-tecnicos : ArregloDinamico<Tecnico>
+		-unidades : ArregloDinamico<UnidadServicio>
+		-historicoSolicitudes : ArregloDinamico<SolicitudServicio>
+		-solicitudesOrdinarias : Cola<SolicitudServicio>
+		-solicitudesCriticas : ColaPrioridad<SolicitudServicio>
+		-kitsRevision : Pila<KitAtencion>
+		-movimientos : Pila<MovimientoOperacion>
+		-consecutivoCliente : int
+		-consecutivoTecnico : int
+		-consecutivoSolicitud : int
+		-consecutivoKit : int
+		-consecutivoUnidad : int
+		+SistemaAutoRescate()
+		+registrarCliente(String nombre, String telefono, TipoCliente tipo) : Cliente
+		+registrarTecnico(String nombre, String especialidad, String zona) : Tecnico
+		+registrarUnidad(TipoUnidad tipo, String zona, String placa) : UnidadServicio
+		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+asignarRecursos(SolicitudServicio solicitud, Tecnico tecnico, UnidadServicio unidad) : void
+		+cambiarEstadoUnidad(UnidadServicio unidad, EstadoUnidad estado) : void
+		+cerrarServicio(SolicitudServicio solicitud) : void
+		+registrarKitEnRevision(String descripcion, boolean requiereReposicion) : KitAtencion
+		+retirarUltimoKitRevisado() : KitAtencion
+		+repararUltimoKitEnRevision() : KitAtencion
+		+repararKitEnRevision(KitAtencion kit) : KitAtencion
+		+registrarMovimientoManual(String detalle) : void
+		+revertirUltimaOperacion() : String
+		+exportarCasosAtendidosCsv(String ruta) : int
+		+getClientes() : ArregloDinamico<Cliente>
+		+getTecnicos() : ArregloDinamico<Tecnico>
+		+getUnidades() : ArregloDinamico<UnidadServicio>
+		+getHistoricoSolicitudes() : ArregloDinamico<SolicitudServicio>
+		+getSolicitudesOrdinarias() : Cola<SolicitudServicio>
+		+getSolicitudesCriticas() : ColaPrioridad<SolicitudServicio>
+		+getKitsRevision() : Pila<KitAtencion>
+		+getMovimientos() : Pila<MovimientoOperacion>
+		+buscarCliente(String id) : Cliente
+		+buscarClientesPorTexto(String texto) : ArregloDinamico<Cliente>
+		+obtenerTecnicosDisponibles() : ArregloDinamico<Tecnico>
+		+obtenerUnidadesDisponibles() : ArregloDinamico<UnidadServicio>
+		+obtenerUnidadesDisponiblesPara(TipoServicio tipoServicio) : ArregloDinamico<UnidadServicio>
+		+obtenerSolicitudesPendientes() : ArregloDinamico<SolicitudServicio>
+		+obtenerSolicitudesEnEjecucion() : ArregloDinamico<SolicitudServicio>
+		+obtenerKitsEnRevision() : ArregloDinamico<KitAtencion>
+		+obtenerKitsPendientesDeReparacion() : ArregloDinamico<KitAtencion>
+		+buscarTecnico(String id) : Tecnico
+		+buscarUnidad(String uuid) : UnidadServicio
+		+buscarSolicitud(String id) : SolicitudServicio
+		-quitarDePendientes(SolicitudServicio solicitud) : void
+		-devolverAPendientes(SolicitudServicio solicitud) : void
+		-registrarMovimiento(String tipo, String detalle) : void
+		-esUnidadCompatible(TipoServicio servicio, TipoUnidad unidad) : boolean
+		-validarTexto(String texto, String campo) : void
+		-csv(String texto) : String
+	}
+}
+
+package "autorescate.model.entidades" {
+	class Cliente {
+		-id : String
+		-nombre : String
+		-telefono : String
+		-tipo : TipoCliente
+		+Cliente(String id, String nombre, String telefono, TipoCliente tipo)
+		+getId() : String
+		+getNombre() : String
+		+setNombre(String nombre) : void
+		+getTelefono() : String
+		+setTelefono(String telefono) : void
+		+getTipo() : TipoCliente
+		+setTipo(TipoCliente tipo) : void
+		+toString() : String
+	}
+
+	class KitAtencion {
+		-id : String
+		-descripcion : String
+		-estado : EstadoKit
+		-requiereReposicion : boolean
+		+KitAtencion(String id, String descripcion)
+		+getId() : String
+		+getDescripcion() : String
+		+getEstado() : EstadoKit
+		+setEstado(EstadoKit estado) : void
+		+isRequiereReposicion() : boolean
+		+setRequiereReposicion(boolean requiereReposicion) : void
+		+toString() : String
+	}
+
+	class MovimientoOperacion {
+		{static} +REGISTRO : String
+		{static} +ASIGNACION : String
+		{static} +CIERRE : String
+		{static} +CAMBIO_UNIDAD : String
+		-tipo : String
+		-detalle : String
+		-timestamp : long
+		-solicitud : SolicitudServicio
+		-tecnico : Tecnico
+		-unidad : UnidadServicio
+		-estadoSolicitudAnterior : EstadoSolicitud
+		-estadoTecnicoAnterior : EstadoTecnico
+		-estadoUnidadAnterior : EstadoUnidad
+		-fechaCierreAnterior : String
+		+MovimientoOperacion(String tipo, String detalle)
+		+getTipo() : String
+		+getDetalle() : String
+		+getTimestamp() : long
+		+getSolicitud() : SolicitudServicio
+		+setSolicitud(SolicitudServicio solicitud) : void
+		+getTecnico() : Tecnico
+		+setTecnico(Tecnico tecnico) : void
+		+getUnidad() : UnidadServicio
+		+setUnidad(UnidadServicio unidad) : void
+		+getEstadoSolicitudAnterior() : EstadoSolicitud
+		+setEstadoSolicitudAnterior(EstadoSolicitud estadoSolicitudAnterior) : void
+		+getEstadoTecnicoAnterior() : EstadoTecnico
+		+setEstadoTecnicoAnterior(EstadoTecnico estadoTecnicoAnterior) : void
+		+getEstadoUnidadAnterior() : EstadoUnidad
+		+setEstadoUnidadAnterior(EstadoUnidad estadoUnidadAnterior) : void
+		+getFechaCierreAnterior() : String
+		+setFechaCierreAnterior(String fechaCierreAnterior) : void
+		+toString() : String
+	}
+
+	class SolicitudServicio {
+		-id : String
+		-cliente : Cliente
+		-tipoServicio : TipoServicio
+		-estado : EstadoSolicitud
+		-prioridad : int
+		-descripcion : String
+		-ubicacion : String
+		-tecnicoAsignado : Tecnico
+		-unidadAsignada : UnidadServicio
+		-timestamp : long
+		-fechaCierre : String
+		+SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad)
+		+esCritica() : boolean
+		+tieneRecursosAsignados() : boolean
+		+cerrar(String fechaCierre) : void
+		+compareTo(SolicitudServicio otra) : int
+		+getId() : String
+		+getCliente() : Cliente
+		+getTipoServicio() : TipoServicio
+		+getEstado() : EstadoSolicitud
+		+setEstado(EstadoSolicitud estado) : void
+		+getPrioridad() : int
+		+setPrioridad(int prioridad) : void
+		+getDescripcion() : String
+		+getUbicacion() : String
+		+getTecnicoAsignado() : Tecnico
+		+setTecnicoAsignado(Tecnico tecnicoAsignado) : void
+		+getUnidadAsignada() : UnidadServicio
+		+setUnidadAsignada(UnidadServicio unidadAsignada) : void
+		+getTimestamp() : long
+		+getFechaCierre() : String
+		+setFechaCierre(String fechaCierre) : void
+		+toString() : String
+	}
+
+	class Tecnico {
+		-id : String
+		-nombre : String
+		-especialidad : String
+		-estado : EstadoTecnico
+		-zona : String
+		+Tecnico(String id, String nombre, String especialidad, String zona)
+		+estaDisponible() : boolean
+		+getId() : String
+		+getNombre() : String
+		+setNombre(String nombre) : void
+		+getEspecialidad() : String
+		+setEspecialidad(String especialidad) : void
+		+getEstado() : EstadoTecnico
+		+setEstado(EstadoTecnico estado) : void
+		+getZona() : String
+		+setZona(String zona) : void
+		+toString() : String
+	}
+
+	class UnidadServicio {
+		-uuid : String
+		-tipo : TipoUnidad
+		-estado : EstadoUnidad
+		-zona : String
+		-placa : String
+		+UnidadServicio(String uuid, TipoUnidad tipo, String zona, String placa)
+		+estaDisponible() : boolean
+		+getUuid() : String
+		+getTipo() : TipoUnidad
+		+getEstado() : EstadoUnidad
+		+setEstado(EstadoUnidad estado) : void
+		+getZona() : String
+		+setZona(String zona) : void
+		+getPlaca() : String
+		+toString() : String
+	}
+}
+
+package "autorescate.model.funciones" {
+	class ArregloDinamico<T> {
+		-elementos : Object[]
+		-tamano : int
+		{static} -CAPACIDAD_INICIAL : int
+		+ArregloDinamico()
+		+agregar(T elemento) : void
+		+obtener(int indice) : T
+		+eliminar(int indice) : void
+		+eliminarElemento(T elemento) : boolean
+		+tamano() : int
+		+estaVacio() : boolean
+		-verificarIndice(int indice) : void
+		-redimensionar() : void
+	}
+
+	class Cola<T> {
+		-elementos : Object[]
+		-frente : int
+		-fondo : int
+		-tamano : int
+		{static} -CAPACIDAD_INICIAL : int
+		+Cola()
+		+encolar(T elemento) : void
+		+desencolar() : T
+		+verFrente() : T
+		+obtener(int indice) : T
+		+eliminarElemento(T elemento) : boolean
+		+estaVacia() : boolean
+		+tamano() : int
+		-redimensionar() : void
+	}
+
+	class ColaPrioridad<T> {
+		-elementos : Object[]
+		-tamano : int
+		{static} -CAPACIDAD_INICIAL : int
+		+ColaPrioridad()
+		+insertar(T elemento) : void
+		+extraerMaximo() : T
+		+verMaximo() : T
+		+obtener(int indice) : T
+		+eliminarElemento(T elemento) : boolean
+		+estaVacia() : boolean
+		+tamano() : int
+		-redimensionar() : void
+	}
+
+	class Pila<T> {
+		-elementos : Object[]
+		-tope : int
+		{static} -CAPACIDAD_INICIAL : int
+		+Pila()
+		+Pila(int capacidad)
+		+apilar(T elemento) : void
+		+desapilar() : T
+		+verTope() : T
+		+obtenerDesdeTope(int indiceDesdeTope) : T
+		+estaVacia() : boolean
+		+tamano() : int
+		-redimensionar() : void
+	}
+}
+
+package "autorescate.model.programa" {
+	enum EstadoKit {
+		DISPONIBLE
+		EN_USO
+		EN_REVISION
+	}
+
+	enum EstadoServicio {
+		DISPONIBLE
+		ASIGNADA
+		MANTENIMIENTO
+		FUERA_DE_SERVICIO
+	}
+
+	enum EstadoSolicitud {
+		PENDIENTE
+		EN_EJECUCION
+		CERRADA
+		CANCELADA
+	}
+
+	enum EstadoTecnico {
+		DISPONIBLE
+		OCUPADO
+		INACTIVO
+	}
+
+	enum EstadoUnidad {
+		DISPONIBLE
+		ASIGNADA
+		MANTENIMIENTO
+		FUERA_DE_SERVICIO
+	}
+
+	enum Necesidad {
+		VEHICULO_VARADO
+		CAMBIO_LLANTA
+		PASO_DE_CORRIENTE
+		ENVIO_GRUA
+		APERTURA_PUERTAS
+		SUMINISTRO_COMBUSTIBLE
+		REVISION_MECANICA_BASICA
+	}
+
+	enum Servicio {
+		GRUA
+		MOTO_APOYO
+		CAMIONETA_ASISTENCIA
+		VEHICULO_LIVIANO
+	}
+
+	enum TipoCliente {
+		PARTICULAR
+		EMPRESA_TRANSPORTE
+		ASEGURADORA
+	}
+
+	enum TipoIncidente {
+		VARADO
+		PINCHADO
+		CHOQUE
+		BATERIA
+		SIN_COMBUSTIBLE
+		LLAVES_DENTRO
+		FALLA_MECANICA
+		FALLA_ELECTRICA
+		GRUA_URGENTE
+		VEHICULO_BLOQUEA_VIA
+		PERSONAS_EN_RIESGO
+		OTRO
+
+		-descripcion : String
+		-prioridadSugerida : int
+		+getDescripcion() : String
+		+getPrioridadSugerida() : int
+		+toString() : String
+	}
+
+	enum TipoServicio {
+		GRUA
+		MOTO_APOYO
+		CAMIONETA_ASISTENCIA
+		VEHICULO_LIVIANO
+	}
+
+	enum TipoUnidad {
+		GRUA
+		MOTO_APOYO
+		CAMIONETA
+		VEHICULO_LIVIANO
+	}
+}
+
+package "autorescate.view" {
+	class AutoRescateFrame {
+		-controller : AutoRescateController
+		-resultadoTitulo : JLabel
+		-salida : JTextArea
+		-selectorRegistro : JComboBox<String>
+		-registroCards : CardLayout
+		-registroPanelCards : JPanel
+		-clienteNombre : JTextField
+		-clienteTelefono : JTextField
+		-clienteTipo : JComboBox<TipoCliente>
+		-tecnicoNombre : JTextField
+		-tecnicoEspecialidad : JTextField
+		-tecnicoZona : JTextField
+		-unidadTipo : JComboBox<TipoUnidad>
+		-unidadZona : JTextField
+		-unidadPlaca : JTextField
+		-busquedaClienteSolicitud : JTextField
+		-clientesEncontrados : JComboBox<Cliente>
+		-solicitudIncidente : JComboBox<TipoIncidente>
+		-solicitudOtroIncidente : JTextField
+		-solicitudTipo : JComboBox<TipoServicio>
+		-solicitudDetalle : JTextField
+		-solicitudUbicacion : JTextField
+		-solicitudPrioridad : JTextField
+		-solicitudesPendientes : JComboBox<SolicitudServicio>
+		-tecnicosDisponibles : JComboBox<Tecnico>
+		-unidadesDisponibles : JComboBox<UnidadServicio>
+		-unidadesEstado : JComboBox<UnidadServicio>
+		-nuevoEstadoUnidad : JComboBox<EstadoUnidad>
+		-solicitudesEnEjecucion : JComboBox<SolicitudServicio>
+		-kitDescripcion : JTextField
+		-kitReposicion : JCheckBox
+		-kitsRevision : JComboBox<KitAtencion>
+		-movimientoDetalle : JTextField
+		+AutoRescateFrame(AutoRescateController controller)
+		-crearEncabezado() : JPanel
+		-crearCuerpo() : JSplitPane
+		-crearTabRegistrar() : JPanel
+		-cardCliente() : JPanel
+		-cardTecnico() : JPanel
+		-cardUnidad() : JPanel
+		-crearTabNuevaSolicitud() : JPanel
+		-crearTabAsignar() : JPanel
+		-crearTabUnidades() : JPanel
+		-crearTabCierres() : JPanel
+		-crearTabKits() : JPanel
+		-crearTabMovimientos() : JPanel
+		-crearTabConsultas() : JPanel
+		-registrarCliente() : void
+		-registrarTecnico() : void
+		-registrarUnidad() : void
+		-crearSolicitud() : void
+		-asignarRecursos() : void
+		-cambiarEstadoUnidad() : void
+		-cerrarServicio() : void
+		-registrarKit() : void
+		-repararKit() : void
+		-retirarKit() : void
+		-registrarMovimiento() : void
+		-revertir() : void
+		-exportarCsv() : void
+		-actualizarClientesEncontrados() : void
+		-actualizarCombosAsignacion() : void
+		-actualizarUnidadesCompatibles() : void
+		-actualizarCombosOperacion() : void
+		-actualizarKitsRevision() : void
+		-llenarCombo<T>(JComboBox<T> combo, ArregloDinamico<T> datos) : void
+		-actualizarPrioridadSugerida() : void
+		-mostrarResumen() : void
+		-setResultado(String titulo, String texto) : void
+		-formatoCliente(Cliente cliente) : String
+		-formatoUnidad(UnidadServicio unidad) : String
+		-formatoSolicitud(SolicitudServicio solicitud) : String
+		-panelBase() : JPanel
+		-card(String titulo) : JPanel
+		-titulo(String texto) : JLabel
+		-agregarCampo(JPanel panel, int fila, String etiqueta, Component campo) : void
+		-agregarBotonConsulta(JPanel panel, int fila, String texto, ActionListener listener) : void
+		-gbc(int x, int y, int ancho) : GridBagConstraints
+		-gbcCampo(int fila) : GridBagConstraints
+		-gbcBoton(int fila) : GridBagConstraints
+		-botonPrincipal(String texto) : JButton
+		-botonClaro(String texto) : JButton
+		-limpiar(JTextField a) : void
+		-limpiar(JTextField a, JTextField b) : void
+		-limpiar(JTextField a, JTextField b, JTextField c) : void
+		-limpiar(JTextField a, JTextField b, JTextField c, JTextField d) : void
+		-mostrarError(Exception ex) : void
+	}
+}
+
+Main --> AutoRescateController
+Main --> AutoRescateFrame
+AutoRescateController --> SistemaAutoRescate
+AutoRescateFrame --> AutoRescateController
+
+SistemaAutoRescate *-- ArregloDinamico : clientes
+SistemaAutoRescate *-- ArregloDinamico : tecnicos
+SistemaAutoRescate *-- ArregloDinamico : unidades
+SistemaAutoRescate *-- ArregloDinamico : historicoSolicitudes
+SistemaAutoRescate *-- Cola : solicitudesOrdinarias
+SistemaAutoRescate *-- ColaPrioridad : solicitudesCriticas
+SistemaAutoRescate *-- Pila : kitsRevision
+SistemaAutoRescate *-- Pila : movimientos
+
+SistemaAutoRescate --> Cliente
+SistemaAutoRescate --> Tecnico
+SistemaAutoRescate --> UnidadServicio
+SistemaAutoRescate --> SolicitudServicio
+SistemaAutoRescate --> KitAtencion
+SistemaAutoRescate --> MovimientoOperacion
+
+AutoRescateController --> Cliente
+AutoRescateController --> Tecnico
+AutoRescateController --> UnidadServicio
+AutoRescateController --> SolicitudServicio
+AutoRescateController --> KitAtencion
+AutoRescateController --> MovimientoOperacion
+AutoRescateController --> ArregloDinamico
+AutoRescateController --> Cola
+AutoRescateController --> ColaPrioridad
+AutoRescateController --> Pila
+
+SolicitudServicio --> Cliente
+SolicitudServicio --> Tecnico
+SolicitudServicio --> UnidadServicio
+SolicitudServicio ..|> Comparable
+
+MovimientoOperacion --> SolicitudServicio
+MovimientoOperacion --> Tecnico
+MovimientoOperacion --> UnidadServicio
+
+Cliente --> TipoCliente
+KitAtencion --> EstadoKit
+Tecnico --> EstadoTecnico
+UnidadServicio --> TipoUnidad
+UnidadServicio --> EstadoUnidad
+SolicitudServicio --> TipoServicio
+SolicitudServicio --> EstadoSolicitud
+TipoIncidente --> Necesidad
+TipoIncidente --> Servicio
+
+@enduml
