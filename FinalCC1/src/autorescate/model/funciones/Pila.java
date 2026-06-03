@@ -3,7 +3,6 @@ package autorescate.model.funciones;
 /**
  * Pila propia LIFO para kits y movimientos recientes.
  *
- * Tipo de elementos.
  */
 public class Pila<T> {
 
@@ -11,19 +10,11 @@ public class Pila<T> {
     private Object[] elementos;
     private int tope;
 
-    /**
-     * Construye una pila vacia.
-     */
     public Pila() {
         elementos = new Object[CAPACIDAD_INICIAL];
         tope = -1;
     }
 
-    /**
-     * Construye una pila con capacidad inicial personalizada.
-     *
-     * Capacidad inicial.
-     */
     public Pila(int capacidad) {
         elementos = new Object[capacidad];
         tope = -1;
@@ -31,8 +22,6 @@ public class Pila<T> {
 
     /**
      * Apila un elemento.
-     *
-     * Elemento a apilar.
      */
     public void apilar(T elemento) {
         if (tope == elementos.length - 1) {
@@ -43,8 +32,6 @@ public class Pila<T> {
 
     /**
      * Desapila el elemento del tope.
-     *
-     * Elemento retirado.
      */
     @SuppressWarnings("unchecked")
     public T desapilar() {
@@ -58,9 +45,8 @@ public class Pila<T> {
 
     /**
      * Consulta el elemento del tope.
-     *
-     * Elemento del tope.
      */
+    
     @SuppressWarnings("unchecked")
     public T verTope() {
         if (estaVacia()) {
@@ -71,9 +57,6 @@ public class Pila<T> {
 
     /**
      * Obtiene un elemento sin retirarlo, contando desde el tope.
-     *
-     * 0 para el tope.
-     * Elemento consultado.
      */
     @SuppressWarnings("unchecked")
     public T obtenerDesdeTope(int indiceDesdeTope) {
@@ -84,7 +67,7 @@ public class Pila<T> {
     }
 
     /**
-     * {@code true} si no contiene elementos.
+	true si no contiene elementos.
      */
     public boolean estaVacia() {
         return tope == -1;

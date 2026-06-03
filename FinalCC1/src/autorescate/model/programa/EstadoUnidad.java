@@ -1,8 +1,5 @@
 package autorescate.model.programa;
 
-/**
- * Estados operativos de una unidad de servicio.
- */
 public enum EstadoUnidad {
     DISPONIBLE,
     ASIGNADA,

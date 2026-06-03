@@ -46,9 +46,6 @@ import autorescate.model.programa.TipoIncidente;
 import autorescate.model.programa.TipoServicio;
 import autorescate.model.programa.TipoUnidad;
 
-/**
- * Vista principal de AutoRescate 24/7 organizada por flujos de trabajo.
- */
 public class AutoRescateFrame extends JFrame {
 
     private AutoRescateController controller;

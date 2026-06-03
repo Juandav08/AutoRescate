@@ -3,15 +3,10 @@ package autorescate.model.entidades;
 import autorescate.model.programa.EstadoTecnico;
 
 public class Tecnico {
-
     private String id;
-
     private String nombre;
-
     private String especialidad;
-
     private EstadoTecnico estado;
-
     private String zona;
     
     public Tecnico(String id, String nombre, String especialidad, String zona) {

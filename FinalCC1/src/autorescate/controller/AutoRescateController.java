@@ -18,21 +18,17 @@ import autorescate.model.programa.TipoCliente;
 import autorescate.model.programa.TipoServicio;
 import autorescate.model.programa.TipoUnidad;
 
-/**
- * Controlador MVC que conecta la vista Swing con el modelo.
- */
+
 public class AutoRescateController {
 
     private SistemaAutoRescate sistema;
 
-    /**
-     * Crea el controlador con un modelo nuevo.
-     */
+
     public AutoRescateController() {
         sistema = new SistemaAutoRescate();
     }
 
-    /** Modelo administrado por el controlador. */
+
     public SistemaAutoRescate getSistema() { return sistema; }
 
     /** Registra un cliente. */

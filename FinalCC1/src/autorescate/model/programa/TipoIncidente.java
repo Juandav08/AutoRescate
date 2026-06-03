@@ -1,8 +1,5 @@
 package autorescate.model.programa;
 
-/**
- * Tipos frecuentes de incidente reportados por los clientes.
- */
 public enum TipoIncidente {
     VARADO("Vehiculo varado", 3),
     PINCHADO("Llanta pinchada", 2),
@@ -20,23 +17,15 @@ public enum TipoIncidente {
     private String descripcion;
     private int prioridadSugerida;
 
-    /**
-     * Construye un tipo de incidente.
-     *
-     * Texto para mostrar.
-     * Prioridad sugerida entre 1 y 10.
-     */
     TipoIncidente(String descripcion, int prioridadSugerida) {
         this.descripcion = descripcion;
         this.prioridadSugerida = prioridadSugerida;
     }
 
-    /** Descripcion legible del incidente. */
     public String getDescripcion() {
         return descripcion;
     }
 
-    /** Prioridad sugerida del incidente. */
     public int getPrioridadSugerida() {
         return prioridadSugerida;
     }
