@@ -19,6 +19,7 @@ import autorescate.model.programa.EstadoSolicitud;
 import autorescate.model.programa.EstadoTecnico;
 import autorescate.model.programa.EstadoUnidad;
 import autorescate.model.programa.TipoCliente;
+import autorescate.model.programa.TipoIncidente;
 import autorescate.model.programa.TipoServicio;
 import autorescate.model.programa.TipoUnidad;
 
@@ -125,16 +126,19 @@ public class SistemaAutoRescate {
      * Prioridad 1 a 10.
      * Solicitud creada.
      */
-    public SolicitudServicio crearSolicitud(Cliente cliente, TipoServicio tipoServicio,
+    public SolicitudServicio crearSolicitud(Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente,
             String descripcion, String ubicacion, int prioridad) {
         if (cliente == null) {
             throw new IllegalArgumentException("Toda solicitud debe estar asociada a un cliente.");
+        }
+        if (tipoIncidente == null) {
+            throw new IllegalArgumentException("Toda solicitud debe tener un tipo de incidente.");
         }
         if (prioridad < 1 || prioridad > 5) {
             throw new IllegalArgumentException("La prioridad debe estar entre 1 y 5.");
         }
         SolicitudServicio solicitud = new SolicitudServicio("S-" + consecutivoSolicitud++,
-                cliente, tipoServicio, descripcion, ubicacion, prioridad);
+                cliente, tipoServicio, tipoIncidente, descripcion, ubicacion, prioridad);
         historicoSolicitudes.agregar(solicitud);
         if (solicitud.esCritica()) {
             solicitudesCriticas.insertar(solicitud);
@@ -354,13 +358,14 @@ public class SistemaAutoRescate {
         int exportados = 0;
         String hoy = LocalDate.now().toString();
         FileWriter writer = new FileWriter(ruta);
-        writer.write("id,fecha,cliente,tipo,prioridad,tecnico,unidad,ubicacion,descripcion\n");
+        writer.write("id,fecha,cliente,tipo,incidente,prioridad,tecnico,unidad,ubicacion,descripcion\n");
         for (int i = 0; i < historicoSolicitudes.tamano(); i++) {
             SolicitudServicio solicitud = historicoSolicitudes.obtener(i);
             if (solicitud.getEstado() == EstadoSolicitud.CERRADA
                     && hoy.equals(solicitud.getFechaCierre())) {
                 writer.write(csv(solicitud.getId()) + "," + csv(solicitud.getFechaCierre()) + ","
                         + csv(solicitud.getCliente().getNombre()) + "," + solicitud.getTipoServicio() + ","
+                        + csv(String.valueOf(solicitud.getTipoIncidente())) + ","
                         + solicitud.getPrioridad() + "," + csv(solicitud.getTecnicoAsignado().getNombre()) + ","
                         + csv(solicitud.getUnidadAsignada().getPlaca()) + "," + csv(solicitud.getUbicacion()) + ","
                         + csv(solicitud.getDescripcion()) + "\n");

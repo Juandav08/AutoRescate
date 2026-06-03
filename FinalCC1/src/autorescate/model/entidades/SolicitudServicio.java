@@ -1,6 +1,7 @@
 package autorescate.model.entidades;
 
 import autorescate.model.programa.EstadoSolicitud;
+import autorescate.model.programa.TipoIncidente;
 import autorescate.model.programa.TipoServicio;
 
 /**
@@ -11,6 +12,7 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
     private String id;
     private Cliente cliente;
     private TipoServicio tipoServicio;
+    private TipoIncidente tipoIncidente;
     private EstadoSolicitud estado;
     private int prioridad;
     private String descripcion;
@@ -21,11 +23,12 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
     private String fechaCierre;
 
 
-    public SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio,
+    public SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente,
             String descripcion, String ubicacion, int prioridad) {
         this.id = id;
         this.cliente = cliente;
         this.tipoServicio = tipoServicio;
+        this.tipoIncidente = tipoIncidente;
         this.descripcion = descripcion;
         this.ubicacion = ubicacion;
         this.prioridad = prioridad;
@@ -69,6 +72,8 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
 
     public TipoServicio getTipoServicio() { return tipoServicio; }
 
+    public TipoIncidente getTipoIncidente() { return tipoIncidente; }
+
     public EstadoSolicitud getEstado() { return estado; }
 
     public void setEstado(EstadoSolicitud estado) { this.estado = estado; }
@@ -101,7 +106,7 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
 
     @Override
     public String toString() {
-        return id + " | " + tipoServicio + " | Cliente: " + cliente.getNombre()
+        return id + " | " + tipoServicio + " | " + tipoIncidente + " | Cliente: " + cliente.getNombre()
                 + " | Prioridad: " + prioridad + " | Estado: " + estado;
     }
 }

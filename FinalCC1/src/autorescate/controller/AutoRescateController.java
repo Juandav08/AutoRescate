@@ -15,6 +15,7 @@ import autorescate.model.funciones.ColaPrioridad;
 import autorescate.model.funciones.Pila;
 import autorescate.model.programa.EstadoUnidad;
 import autorescate.model.programa.TipoCliente;
+import autorescate.model.programa.TipoIncidente;
 import autorescate.model.programa.TipoServicio;
 import autorescate.model.programa.TipoUnidad;
 
@@ -47,19 +48,19 @@ public class AutoRescateController {
     }
 
     /** Crea una solicitud. */
-    public SolicitudServicio crearSolicitud(String clienteId, TipoServicio tipoServicio,
+    public SolicitudServicio crearSolicitud(String clienteId, TipoServicio tipoServicio, TipoIncidente tipoIncidente,
             String descripcion, String ubicacion, int prioridad) {
         Cliente cliente = sistema.buscarCliente(clienteId);
         if (cliente == null) {
             throw new IllegalArgumentException("No existe el cliente " + clienteId);
         }
-        return sistema.crearSolicitud(cliente, tipoServicio, descripcion, ubicacion, prioridad);
+        return sistema.crearSolicitud(cliente, tipoServicio, tipoIncidente, descripcion, ubicacion, prioridad);
     }
 
     /** Crea una solicitud usando un cliente ya seleccionado. */
-    public SolicitudServicio crearSolicitud(Cliente cliente, TipoServicio tipoServicio,
+    public SolicitudServicio crearSolicitud(Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente,
             String descripcion, String ubicacion, int prioridad) {
-        return sistema.crearSolicitud(cliente, tipoServicio, descripcion, ubicacion, prioridad);
+        return sistema.crearSolicitud(cliente, tipoServicio, tipoIncidente, descripcion, ubicacion, prioridad);
     }
 
     /** Asigna recursos a una solicitud. */

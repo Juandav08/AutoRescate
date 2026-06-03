@@ -17,8 +17,8 @@ package "autorescate.controller" {
 		+registrarCliente(String nombre, String telefono, TipoCliente tipo) : Cliente
 		+registrarTecnico(String nombre, String especialidad, String zona) : Tecnico
 		+registrarUnidad(TipoUnidad tipo, String zona, String placa) : UnidadServicio
-		+crearSolicitud(String clienteId, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
-		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+crearSolicitud(String clienteId, TipoServicio tipoServicio, TipoIncidente tipoIncidente, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
 		+asignarRecursos(String solicitudId, String tecnicoId, String unidadUuid) : void
 		+asignarRecursos(SolicitudServicio solicitud, Tecnico tecnico, UnidadServicio unidad) : void
 		+cambiarEstadoUnidad(String unidadUuid, EstadoUnidad estado) : void
@@ -74,7 +74,7 @@ package "autorescate.model" {
 		+registrarCliente(String nombre, String telefono, TipoCliente tipo) : Cliente
 		+registrarTecnico(String nombre, String especialidad, String zona) : Tecnico
 		+registrarUnidad(TipoUnidad tipo, String zona, String placa) : UnidadServicio
-		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
+		+crearSolicitud(Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente, String descripcion, String ubicacion, int prioridad) : SolicitudServicio
 		+asignarRecursos(SolicitudServicio solicitud, Tecnico tecnico, UnidadServicio unidad) : void
 		+cambiarEstadoUnidad(UnidadServicio unidad, EstadoUnidad estado) : void
 		+cerrarServicio(SolicitudServicio solicitud) : void
@@ -186,6 +186,7 @@ package "autorescate.model.entidades" {
 		-id : String
 		-cliente : Cliente
 		-tipoServicio : TipoServicio
+		-tipoIncidente : TipoIncidente
 		-estado : EstadoSolicitud
 		-prioridad : int
 		-descripcion : String
@@ -194,7 +195,7 @@ package "autorescate.model.entidades" {
 		-unidadAsignada : UnidadServicio
 		-timestamp : long
 		-fechaCierre : String
-		+SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio, String descripcion, String ubicacion, int prioridad)
+		+SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio, TipoIncidente tipoIncidente, String descripcion, String ubicacion, int prioridad)
 		+esCritica() : boolean
 		+tieneRecursosAsignados() : boolean
 		+cerrar(String fechaCierre) : void
@@ -202,6 +203,7 @@ package "autorescate.model.entidades" {
 		+getId() : String
 		+getCliente() : Cliente
 		+getTipoServicio() : TipoServicio
+		+getTipoIncidente() : TipoIncidente
 		+getEstado() : EstadoSolicitud
 		+setEstado(EstadoSolicitud estado) : void
 		+getPrioridad() : int
@@ -328,13 +330,6 @@ package "autorescate.model.programa" {
 		EN_REVISION
 	}
 
-	enum EstadoServicio {
-		DISPONIBLE
-		ASIGNADA
-		MANTENIMIENTO
-		FUERA_DE_SERVICIO
-	}
-
 	enum EstadoSolicitud {
 		PENDIENTE
 		EN_EJECUCION
@@ -353,23 +348,6 @@ package "autorescate.model.programa" {
 		ASIGNADA
 		MANTENIMIENTO
 		FUERA_DE_SERVICIO
-	}
-
-	enum Necesidad {
-		VEHICULO_VARADO
-		CAMBIO_LLANTA
-		PASO_DE_CORRIENTE
-		ENVIO_GRUA
-		APERTURA_PUERTAS
-		SUMINISTRO_COMBUSTIBLE
-		REVISION_MECANICA_BASICA
-	}
-
-	enum Servicio {
-		GRUA
-		MOTO_APOYO
-		CAMIONETA_ASISTENCIA
-		VEHICULO_LIVIANO
 	}
 
 	enum TipoCliente {
@@ -553,8 +531,7 @@ Tecnico --> EstadoTecnico
 UnidadServicio --> TipoUnidad
 UnidadServicio --> EstadoUnidad
 SolicitudServicio --> TipoServicio
+SolicitudServicio --> TipoIncidente
 SolicitudServicio --> EstadoSolicitud
-TipoIncidente --> Necesidad
-TipoIncidente --> Servicio
 
 @enduml

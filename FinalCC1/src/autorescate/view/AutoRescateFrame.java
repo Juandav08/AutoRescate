@@ -510,7 +510,7 @@ public class AutoRescateFrame extends JFrame {
                 descripcion += " | " + solicitudDetalle.getText().trim();
             }
             SolicitudServicio solicitud = controller.crearSolicitud(cliente,
-                    (TipoServicio) solicitudTipo.getSelectedItem(), descripcion,
+                    (TipoServicio) solicitudTipo.getSelectedItem(), incidente, descripcion,
                     solicitudUbicacion.getText(), prioridad);
             limpiar(busquedaClienteSolicitud, solicitudOtroIncidente, solicitudDetalle, solicitudUbicacion);
             actualizarClientesEncontrados();
@@ -737,6 +737,7 @@ public class AutoRescateFrame extends JFrame {
         return solicitud.getId() + " | " + solicitud.getTipoServicio() + " | "
                 + solicitud.getEstado() + " | Prioridad: " + solicitud.getPrioridad()
                 + "\nCliente: " + solicitud.getCliente().getNombre()
+                + "\nIncidente: " + solicitud.getTipoIncidente()
                 + "\nUbicacion: " + solicitud.getUbicacion()
                 + "\nCaso: " + solicitud.getDescripcion();
     }
