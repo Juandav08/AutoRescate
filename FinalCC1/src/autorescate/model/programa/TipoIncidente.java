@@ -23,20 +23,20 @@ public enum TipoIncidente {
     /**
      * Construye un tipo de incidente.
      *
-     * @param descripcion Texto para mostrar.
-     * @param prioridadSugerida Prioridad sugerida entre 1 y 10.
+     * Texto para mostrar.
+     * Prioridad sugerida entre 1 y 10.
      */
     TipoIncidente(String descripcion, int prioridadSugerida) {
         this.descripcion = descripcion;
         this.prioridadSugerida = prioridadSugerida;
     }
 
-    /** @return Descripcion legible del incidente. */
+    /** Descripcion legible del incidente. */
     public String getDescripcion() {
         return descripcion;
     }
 
-    /** @return Prioridad sugerida del incidente. */
+    /** Prioridad sugerida del incidente. */
     public int getPrioridadSugerida() {
         return prioridadSugerida;
     }

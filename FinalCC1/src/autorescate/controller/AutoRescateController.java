@@ -32,7 +32,7 @@ public class AutoRescateController {
         sistema = new SistemaAutoRescate();
     }
 
-    /** @return Modelo administrado por el controlador. */
+    /** Modelo administrado por el controlador. */
     public SistemaAutoRescate getSistema() { return sistema; }
 
     /** Registra un cliente. */
@@ -156,17 +156,17 @@ public class AutoRescateController {
         return sistema.buscarClientesPorTexto(texto);
     }
 
-    /** @return Tecnicos disponibles para asignacion. */
+    /** Tecnicos disponibles para asignacion. */
     public ArregloDinamico<Tecnico> obtenerTecnicosDisponibles() {
         return sistema.obtenerTecnicosDisponibles();
     }
 
-    /** @return Unidades disponibles para asignacion. */
+    /** Unidades disponibles para asignacion. */
     public ArregloDinamico<UnidadServicio> obtenerUnidadesDisponibles() {
         return sistema.obtenerUnidadesDisponibles();
     }
 
-    /** @return Unidades disponibles compatibles con una solicitud. */
+    /** Unidades disponibles compatibles con una solicitud. */
     public ArregloDinamico<UnidadServicio> obtenerUnidadesDisponiblesPara(SolicitudServicio solicitud) {
         if (solicitud == null) {
             return new ArregloDinamico<UnidadServicio>();
@@ -174,27 +174,27 @@ public class AutoRescateController {
         return sistema.obtenerUnidadesDisponiblesPara(solicitud.getTipoServicio());
     }
 
-    /** @return Solicitudes pendientes. */
+    /** Solicitudes pendientes. */
     public ArregloDinamico<SolicitudServicio> obtenerSolicitudesPendientes() {
         return sistema.obtenerSolicitudesPendientes();
     }
 
-    /** @return Solicitudes en ejecucion. */
+    /** Solicitudes en ejecucion. */
     public ArregloDinamico<SolicitudServicio> obtenerSolicitudesEnEjecucion() {
         return sistema.obtenerSolicitudesEnEjecucion();
     }
 
-    /** @return Kits actualmente en revision. */
+    /** Kits actualmente en revision. */
     public ArregloDinamico<KitAtencion> obtenerKitsEnRevision() {
         return sistema.obtenerKitsEnRevision();
     }
 
-    /** @return Kits que requieren reparacion o reposicion. */
+    /** Kits que requieren reparacion o reposicion. */
     public ArregloDinamico<KitAtencion> obtenerKitsPendientesDeReparacion() {
         return sistema.obtenerKitsPendientesDeReparacion();
     }
 
-    /** @return Listado de clientes. */
+    /** Listado de clientes. */
     public String listarClientes() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<Cliente> datos = sistema.getClientes();
@@ -206,7 +206,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Listado de tecnicos. */
+    /** Listado de tecnicos. */
     public String listarTecnicos() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<Tecnico> datos = sistema.getTecnicos();
@@ -217,7 +217,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Tecnicos disponibles. */
+    /** Tecnicos disponibles. */
     public String listarTecnicosDisponibles() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<Tecnico> datos = sistema.obtenerTecnicosDisponibles();
@@ -227,7 +227,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Listado de unidades. */
+    /** Listado de unidades. */
     public String listarUnidades() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<UnidadServicio> datos = sistema.getUnidades();
@@ -238,7 +238,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Unidades disponibles. */
+    /** Unidades disponibles. */
     public String listarUnidadesDisponibles() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<UnidadServicio> datos = sistema.obtenerUnidadesDisponibles();
@@ -249,7 +249,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Solicitudes ordinarias pendientes. */
+    /** Solicitudes ordinarias pendientes. */
     public String listarPendientesOrdinarios() {
         StringBuilder sb = new StringBuilder();
         Cola<SolicitudServicio> datos = sistema.getSolicitudesOrdinarias();
@@ -259,7 +259,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Solicitudes criticas pendientes. */
+    /** Solicitudes criticas pendientes. */
     public String listarCriticos() {
         StringBuilder sb = new StringBuilder();
         ColaPrioridad<SolicitudServicio> datos = sistema.getSolicitudesCriticas();
@@ -269,7 +269,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Historico de solicitudes. */
+    /** Historico de solicitudes. */
     public String listarSolicitudes() {
         StringBuilder sb = new StringBuilder();
         ArregloDinamico<SolicitudServicio> datos = sistema.getHistoricoSolicitudes();
@@ -284,7 +284,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Recursos agrupados por estado. */
+    /** Recursos agrupados por estado. */
     public String listarRecursosPorEstado() {
         StringBuilder sb = new StringBuilder();
         sb.append("UNIDADES\n");
@@ -300,7 +300,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Kits en revision desde el ultimo ingresado. */
+    /** Kits en revision desde el ultimo ingresado. */
     public String listarKitsRevision() {
         StringBuilder sb = new StringBuilder();
         Pila<KitAtencion> pila = sistema.getKitsRevision();
@@ -310,7 +310,7 @@ public class AutoRescateController {
         return textoVacio(sb);
     }
 
-    /** @return Movimientos recientes desde el ultimo. */
+    /** Movimientos recientes desde el ultimo. */
     public String listarMovimientos() {
         StringBuilder sb = new StringBuilder();
         Pila<MovimientoOperacion> pila = sistema.getMovimientos();

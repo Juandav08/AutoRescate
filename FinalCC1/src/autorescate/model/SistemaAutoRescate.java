@@ -43,7 +43,7 @@ public class SistemaAutoRescate {
     private int consecutivoUnidad;
 
     /**
-     * Crea el sistema con sus estructuras vacias.
+     * Crea el sistema con sus estructuras vacias. maneja todas las reglas de negocio
      */
     public SistemaAutoRescate() {
         clientes = new ArregloDinamico<Cliente>();
@@ -64,10 +64,10 @@ public class SistemaAutoRescate {
     /**
      * Registra un cliente.
      *
-     * @param nombre Nombre del cliente.
-     * @param telefono Telefono.
-     * @param tipo Tipo de cliente.
-     * @return Cliente creado.
+     * Nombre del cliente.
+     * Telefono.
+     * Tipo de cliente.
+     * Cliente creado.
      */
     public Cliente registrarCliente(String nombre, String telefono, TipoCliente tipo) {
         validarTexto(nombre, "nombre del cliente");
@@ -80,10 +80,10 @@ public class SistemaAutoRescate {
     /**
      * Registra un tecnico.
      *
-     * @param nombre Nombre del tecnico.
-     * @param especialidad Especialidad.
-     * @param zona Zona operativa.
-     * @return Tecnico creado.
+     * Nombre del tecnico.
+     * Especialidad.
+     * Zona operativa.
+     * Tecnico creado.
      */
     public Tecnico registrarTecnico(String nombre, String especialidad, String zona) {
         validarTexto(nombre, "nombre del tecnico");
@@ -97,10 +97,10 @@ public class SistemaAutoRescate {
     /**
      * Registra una unidad con UUID unico.
      *
-     * @param tipo Tipo de unidad.
-     * @param zona Zona.
-     * @param placa Placa o codigo operativo.
-     * @return Unidad creada.
+     * Tipo de unidad.
+     * Zona.
+     * Placa o codigo operativo.
+     * Unidad creada.
      */
     public UnidadServicio registrarUnidad(TipoUnidad tipo, String zona, String placa) {
         validarTexto(placa, "placa");
@@ -118,12 +118,12 @@ public class SistemaAutoRescate {
     /**
      * Crea una solicitud y la ubica en la estructura correspondiente.
      *
-     * @param cliente Cliente asociado.
-     * @param tipoServicio Tipo de servicio.
-     * @param descripcion Descripcion.
-     * @param ubicacion Ubicacion.
-     * @param prioridad Prioridad 1 a 10.
-     * @return Solicitud creada.
+     * Cliente asociado.
+     * Tipo de servicio.
+     * Descripcion.
+     * Ubicacion.
+     * Prioridad 1 a 10.
+     * Solicitud creada.
      */
     public SolicitudServicio crearSolicitud(Cliente cliente, TipoServicio tipoServicio,
             String descripcion, String ubicacion, int prioridad) {
@@ -148,9 +148,9 @@ public class SistemaAutoRescate {
     /**
      * Asigna tecnico y unidad a una solicitud pendiente.
      *
-     * @param solicitud Solicitud.
-     * @param tecnico Tecnico disponible.
-     * @param unidad Unidad disponible.
+     * Solicitud.
+     * Tecnico disponible.
+     * Unidad disponible.
      */
     public void asignarRecursos(SolicitudServicio solicitud, Tecnico tecnico, UnidadServicio unidad) {
         if (solicitud == null || tecnico == null || unidad == null) {
@@ -190,8 +190,8 @@ public class SistemaAutoRescate {
     /**
      * Cambia el estado de una unidad respetando la regla de asignacion.
      *
-     * @param unidad Unidad a modificar.
-     * @param estado Nuevo estado.
+     * Unidad a modificar.
+     * Nuevo estado.
      */
     public void cambiarEstadoUnidad(UnidadServicio unidad, EstadoUnidad estado) {
         if (unidad == null || estado == null) {
@@ -211,7 +211,7 @@ public class SistemaAutoRescate {
     /**
      * Cierra una solicitud atendida liberando recursos.
      *
-     * @param solicitud Solicitud en ejecucion.
+     * Solicitud en ejecucion.
      */
     public void cerrarServicio(SolicitudServicio solicitud) {
         if (solicitud == null) {
@@ -240,9 +240,9 @@ public class SistemaAutoRescate {
     /**
      * Registra un kit en revision.
      *
-     * @param descripcion Descripcion del kit.
-     * @param requiereReposicion Indica si requiere reposicion.
-     * @return Kit registrado.
+     * Descripcion del kit.
+     * Indica si requiere reposicion.
+     * Kit registrado.
      */
     public KitAtencion registrarKitEnRevision(String descripcion, boolean requiereReposicion) {
         validarTexto(descripcion, "descripcion del kit");
@@ -257,7 +257,7 @@ public class SistemaAutoRescate {
     /**
      * Retira el ultimo kit ingresado a revision.
      *
-     * @return Kit retirado.
+     * Kit retirado.
      */
     public KitAtencion retirarUltimoKitRevisado() {
         if (kitsRevision.estaVacia()) {
@@ -275,7 +275,7 @@ public class SistemaAutoRescate {
     /**
      * Marca como reparado o repuesto el ultimo kit en revision.
      *
-     * @return Kit actualizado.
+     * Kit actualizado.
      */
     public KitAtencion repararUltimoKitEnRevision() {
         if (kitsRevision.estaVacia()) {
@@ -290,8 +290,8 @@ public class SistemaAutoRescate {
     /**
      * Marca como reparado o repuesto un kit especifico.
      *
-     * @param kit Kit a reparar.
-     * @return Kit actualizado.
+     * Kit a reparar.
+     * Kit actualizado.
      */
     public KitAtencion repararKitEnRevision(KitAtencion kit) {
         if (kit == null) {
@@ -305,7 +305,7 @@ public class SistemaAutoRescate {
     /**
      * Registra manualmente un movimiento operativo.
      *
-     * @param detalle Detalle del movimiento.
+     * Detalle del movimiento.
      */
     public void registrarMovimientoManual(String detalle) {
         registrarMovimiento(MovimientoOperacion.REGISTRO, detalle);
@@ -314,7 +314,7 @@ public class SistemaAutoRescate {
     /**
      * Revierte la ultima operacion reversible.
      *
-     * @return Descripcion de la reversa aplicada.
+     * Descripcion de la reversa aplicada.
      */
     public String revertirUltimaOperacion() {
         MovimientoOperacion movimiento = movimientos.desapilar();
@@ -346,9 +346,9 @@ public class SistemaAutoRescate {
     /**
      * Exporta a CSV los casos cerrados en la fecha actual.
      *
-     * @param ruta Ruta del archivo.
-     * @return Numero de casos exportados.
-     * @throws IOException Si falla la escritura.
+     * Ruta del archivo.
+     * Numero de casos exportados.
+     * Si falla la escritura.
      */
     public int exportarCasosAtendidosCsv(String ruta) throws IOException {
         int exportados = 0;
@@ -371,35 +371,34 @@ public class SistemaAutoRescate {
         return exportados;
     }
 
-    /** @return Clientes registrados. */
+    /** Clientes registrados. */
     public ArregloDinamico<Cliente> getClientes() { return clientes; }
 
-    /** @return Tecnicos registrados. */
+    /** Tecnicos registrados. */
     public ArregloDinamico<Tecnico> getTecnicos() { return tecnicos; }
 
-    /** @return Unidades registradas. */
+    /** Unidades registradas. */
     public ArregloDinamico<UnidadServicio> getUnidades() { return unidades; }
 
-    /** @return Historico de solicitudes. */
+    /** Historico de solicitudes. */
     public ArregloDinamico<SolicitudServicio> getHistoricoSolicitudes() { return historicoSolicitudes; }
 
-    /** @return Cola de ordinarias pendientes. */
+    /** Cola de ordinarias pendientes. */
     public Cola<SolicitudServicio> getSolicitudesOrdinarias() { return solicitudesOrdinarias; }
 
-    /** @return Cola de criticas pendientes. */
+    /** Cola de criticas pendientes. */
     public ColaPrioridad<SolicitudServicio> getSolicitudesCriticas() { return solicitudesCriticas; }
 
-    /** @return Pila de kits en revision. */
+    /** Pila de kits en revision. */
     public Pila<KitAtencion> getKitsRevision() { return kitsRevision; }
 
-    /** @return Pila de movimientos recientes. */
+    /** Pila de movimientos recientes. */
     public Pila<MovimientoOperacion> getMovimientos() { return movimientos; }
 
     /**
      * Busca cliente por ID.
      *
-     * @param id ID del cliente.
-     * @return Cliente o {@code null}.
+     * ID del cliente.
      */
     public Cliente buscarCliente(String id) {
         for (int i = 0; i < clientes.tamano(); i++) {
@@ -413,8 +412,8 @@ public class SistemaAutoRescate {
     /**
      * Busca clientes por id, nombre o telefono.
      *
-     * @param texto Texto de busqueda.
-     * @return Coincidencias encontradas.
+     * Texto de busqueda.
+     * Coincidencias encontradas.
      */
     public ArregloDinamico<Cliente> buscarClientesPorTexto(String texto) {
         ArregloDinamico<Cliente> resultado = new ArregloDinamico<Cliente>();
@@ -432,7 +431,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Tecnicos actualmente disponibles.
+     * Tecnicos actualmente disponibles.
      */
     public ArregloDinamico<Tecnico> obtenerTecnicosDisponibles() {
         ArregloDinamico<Tecnico> resultado = new ArregloDinamico<Tecnico>();
@@ -446,7 +445,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Unidades actualmente disponibles.
+     * Unidades actualmente disponibles.
      */
     public ArregloDinamico<UnidadServicio> obtenerUnidadesDisponibles() {
         ArregloDinamico<UnidadServicio> resultado = new ArregloDinamico<UnidadServicio>();
@@ -460,8 +459,8 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @param tipoServicio Servicio solicitado.
-     * @return Unidades disponibles compatibles con ese servicio.
+     * Servicio solicitado.
+     * Unidades disponibles compatibles con ese servicio.
      */
     public ArregloDinamico<UnidadServicio> obtenerUnidadesDisponiblesPara(TipoServicio tipoServicio) {
         ArregloDinamico<UnidadServicio> resultado = new ArregloDinamico<UnidadServicio>();
@@ -475,7 +474,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Solicitudes pendientes ordinarias y criticas.
+     * Solicitudes pendientes ordinarias y criticas.
      */
     public ArregloDinamico<SolicitudServicio> obtenerSolicitudesPendientes() {
         ArregloDinamico<SolicitudServicio> resultado = new ArregloDinamico<SolicitudServicio>();
@@ -504,7 +503,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Solicitudes en ejecucion que pueden cerrarse.
+     * Solicitudes en ejecucion que pueden cerrarse.
      */
     public ArregloDinamico<SolicitudServicio> obtenerSolicitudesEnEjecucion() {
         ArregloDinamico<SolicitudServicio> resultado = new ArregloDinamico<SolicitudServicio>();
@@ -518,7 +517,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Kits en revision desde el mas reciente.
+     * Kits en revision desde el mas reciente.
      */
     public ArregloDinamico<KitAtencion> obtenerKitsEnRevision() {
         ArregloDinamico<KitAtencion> resultado = new ArregloDinamico<KitAtencion>();
@@ -529,7 +528,7 @@ public class SistemaAutoRescate {
     }
 
     /**
-     * @return Kits en revision que aun requieren reparacion o reposicion.
+     * Kits en revision que aun requieren reparacion o reposicion.
      */
     public ArregloDinamico<KitAtencion> obtenerKitsPendientesDeReparacion() {
         ArregloDinamico<KitAtencion> resultado = new ArregloDinamico<KitAtencion>();
@@ -545,8 +544,7 @@ public class SistemaAutoRescate {
     /**
      * Busca tecnico por ID.
      *
-     * @param id ID del tecnico.
-     * @return Tecnico o {@code null}.
+     * ID del tecnico.
      */
     public Tecnico buscarTecnico(String id) {
         for (int i = 0; i < tecnicos.tamano(); i++) {
@@ -560,8 +558,7 @@ public class SistemaAutoRescate {
     /**
      * Busca unidad por UUID.
      *
-     * @param uuid UUID de unidad.
-     * @return Unidad o {@code null}.
+     * UUID de unidad.
      */
     public UnidadServicio buscarUnidad(String uuid) {
         for (int i = 0; i < unidades.tamano(); i++) {
@@ -575,8 +572,7 @@ public class SistemaAutoRescate {
     /**
      * Busca solicitud por ID.
      *
-     * @param id ID de solicitud.
-     * @return Solicitud o {@code null}.
+     * ID de solicitud.
      */
     public SolicitudServicio buscarSolicitud(String id) {
         for (int i = 0; i < historicoSolicitudes.tamano(); i++) {

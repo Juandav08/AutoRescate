@@ -1,10 +1,6 @@
 package autorescate.model.funciones;
 
-/**
- * Arreglo dinamico propio para almacenar datos con arreglos.
- *
- * @param <T> Tipo de elementos almacenados.
- */
+
 public class ArregloDinamico<T> {
 
     private static final int CAPACIDAD_INICIAL = 20;
@@ -19,11 +15,7 @@ public class ArregloDinamico<T> {
         tamano = 0;
     }
 
-    /**
-     * Agrega un elemento al final.
-     *
-     * @param elemento Elemento a agregar.
-     */
+ 
     public void agregar(T elemento) {
         if (tamano == elementos.length) {
             redimensionar();
@@ -34,8 +26,8 @@ public class ArregloDinamico<T> {
     /**
      * Obtiene un elemento por indice.
      *
-     * @param indice Posicion solicitada.
-     * @return Elemento almacenado.
+     * Posicion solicitada.
+     * Elemento almacenado.
      */
     @SuppressWarnings("unchecked")
     public T obtener(int indice) {
@@ -45,8 +37,6 @@ public class ArregloDinamico<T> {
 
     /**
      * Elimina un elemento por indice.
-     *
-     * @param indice Posicion a eliminar.
      */
     public void eliminar(int indice) {
         verificarIndice(indice);
@@ -58,9 +48,6 @@ public class ArregloDinamico<T> {
 
     /**
      * Elimina la primera aparicion exacta del elemento indicado.
-     *
-     * @param elemento Elemento a eliminar.
-     * @return {@code true} si fue eliminado.
      */
     public boolean eliminarElemento(T elemento) {
         for (int i = 0; i < tamano; i++) {
@@ -72,16 +59,11 @@ public class ArregloDinamico<T> {
         return false;
     }
 
-    /**
-     * @return Numero de elementos almacenados.
-     */
+ 
     public int tamano() {
         return tamano;
     }
 
-    /**
-     * @return {@code true} si no hay elementos.
-     */
     public boolean estaVacio() {
         return tamano == 0;
     }

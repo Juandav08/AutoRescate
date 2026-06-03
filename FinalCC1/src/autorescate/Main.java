@@ -13,7 +13,7 @@ public class Main {
     /**
      * Inicia la interfaz grafica.
      *
-     * @param args Argumentos de consola no usados.
+     * Argumentos de consola no usados.
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

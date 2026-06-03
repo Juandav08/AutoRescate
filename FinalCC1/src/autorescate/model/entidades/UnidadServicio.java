@@ -5,7 +5,7 @@ import autorescate.model.programa.TipoUnidad;
 
 public class UnidadServicio {
 	 
-    /** Identificador único generado con UUID (Regla 1). */
+    /** Identificador Ãºnico generado con UUID (Regla 1). */
     private String uuid;
  
     /** Tipo de unidad de servicio (Regla 2). */
@@ -14,22 +14,22 @@ public class UnidadServicio {
     /** Estado operativo actual (Regla 2). */
     private EstadoUnidad estado;
  
-    /** Zona de operación (Regla 2). */
+    /** Zona de operaciÃ³n (Regla 2). */
     private String zona;
  
     /**
-     * Placa o código de identificación del vehículo.
-     * Complementa el UUID para identificación operativa.
+     * Placa o cÃ³digo de identificaciÃ³n del vehÃ­culo.
+     * Complementa el UUID para identificaciÃ³n operativa.
      */
     private String placa;
  
     /**
      * Construye una unidad de servicio.
      *
-     * @param uuid  UUID generado externamente.
-     * @param tipo  Tipo de unidad.
-     * @param zona  Zona de operación.
-     * @param placa Placa o código de identificación.
+     * UUID generado externamente.
+     * Tipo de unidad.
+     * Zona de operaciÃ³n.
+     * Placa o cÃ³digo de identificaciÃ³n.
      */
     public UnidadServicio(String uuid, TipoUnidad tipo, String zona, String placa) {
         this.uuid = uuid;
@@ -41,40 +41,40 @@ public class UnidadServicio {
  
     /**
      * Indica si la unidad puede ser enviada a un nuevo servicio.
-     * Regla 4 y 6: solo puede asignarse si está DISPONIBLE.
+     * Regla 4 y 6: solo puede asignarse si estÃ¡ DISPONIBLE.
      *
-     * @return {@code true} si la unidad está disponible.
+     * {@code true} si la unidad estÃ¡ disponible.
      */
     public boolean estaDisponible() {
         return estado == EstadoUnidad.DISPONIBLE;
     }
  
-    // ── Getters y Setters ─────────────────────────────────────────────────────
+    // â”€â”€ Getters y Setters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
  
-    /** @return UUID de la unidad. */
+    /** UUID de la unidad. */
     public String getUuid() { return uuid; }
  
-    /** @return Tipo de unidad. */
+    /** Tipo de unidad. */
     public TipoUnidad getTipo() { return tipo; }
  
-    /** @return Estado operativo actual. */
+    /** Estado operativo actual. */
     public EstadoUnidad getEstado() { return estado; }
  
     /**
      * Actualiza el estado de la unidad.
-     * La validación de transiciones de estado se delega al controlador.
+     * La validaciÃ³n de transiciones de estado se delega al controlador.
      *
-     * @param estado Nuevo estado.
+     * Nuevo estado.
      */
     public void setEstado(EstadoUnidad estado) { this.estado = estado; }
  
-    /** @return Zona de operación. */
+    /** Zona de operaciÃ³n. */
     public String getZona() { return zona; }
  
-    /** @param zona Nueva zona de operación. */
+    /** Nueva zona de operaciÃ³n. */
     public void setZona(String zona) { this.zona = zona; }
  
-    /** @return Placa o código de identificación. */
+    /** Placa o cÃ³digo de identificaciÃ³n. */
     public String getPlaca() { return placa; }
  
     @Override

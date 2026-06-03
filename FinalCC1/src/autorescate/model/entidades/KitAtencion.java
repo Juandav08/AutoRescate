@@ -15,8 +15,8 @@ public class KitAtencion {
     /**
      * Construye un kit de atencion.
      *
-     * @param id Identificador del kit.
-     * @param descripcion Descripcion del contenido.
+     * Identificador del kit.
+     * Descripcion del contenido.
      */
     public KitAtencion(String id, String descripcion) {
         this.id = id;
@@ -25,22 +25,22 @@ public class KitAtencion {
         this.requiereReposicion = false;
     }
 
-    /** @return Identificador del kit. */
+    /** Identificador del kit. */
     public String getId() { return id; }
 
-    /** @return Descripcion del kit. */
+    /** Descripcion del kit. */
     public String getDescripcion() { return descripcion; }
 
-    /** @return Estado actual del kit. */
+    /** Estado actual del kit. */
     public EstadoKit getEstado() { return estado; }
 
-    /** @param estado Nuevo estado del kit. */
+    /** Nuevo estado del kit. */
     public void setEstado(EstadoKit estado) { this.estado = estado; }
 
-    /** @return {@code true} si requiere reposicion. */
+    /** {@code true} si requiere reposicion. */
     public boolean isRequiereReposicion() { return requiereReposicion; }
 
-    /** @param requiereReposicion Indica si requiere reposicion. */
+    /** Indica si requiere reposicion. */
     public void setRequiereReposicion(boolean requiereReposicion) {
         this.requiereReposicion = requiereReposicion;
     }

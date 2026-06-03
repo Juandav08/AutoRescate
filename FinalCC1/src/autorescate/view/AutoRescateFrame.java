@@ -94,7 +94,7 @@ public class AutoRescateFrame extends JFrame {
     /**
      * Construye la ventana principal.
      *
-     * @param controller Controlador MVC.
+     * Controlador MVC.
      */
     public AutoRescateFrame(AutoRescateController controller) {
         super("AutoRescate 24/7");

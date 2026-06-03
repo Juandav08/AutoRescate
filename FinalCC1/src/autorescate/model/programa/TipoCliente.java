@@ -5,7 +5,7 @@ public enum TipoCliente {
     PARTICULAR,
     /** Empresa de transporte (buses, camiones, etc.). */
     EMPRESA_TRANSPORTE,
-    /** Compañía aseguradora. */
+    /** CompaÃ±Ã­a aseguradora. */
     ASEGURADORA
 }
 

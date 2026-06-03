@@ -3,7 +3,7 @@ package autorescate.model.funciones;
 /**
  * Cola de prioridad propia ordenada de mayor a menor prioridad.
  *
- * @param <T> Tipo comparable de elementos.
+ * Tipo comparable de elementos.
  */
 public class ColaPrioridad<T extends Comparable<T>> {
 
@@ -22,7 +22,7 @@ public class ColaPrioridad<T extends Comparable<T>> {
     /**
      * Inserta un elemento manteniendo el mayor al frente.
      *
-     * @param elemento Elemento a insertar.
+     * Elemento a insertar.
      */
     @SuppressWarnings("unchecked")
     public void insertar(T elemento) {
@@ -41,7 +41,7 @@ public class ColaPrioridad<T extends Comparable<T>> {
     /**
      * Extrae el elemento de mayor prioridad.
      *
-     * @return Elemento de mayor prioridad.
+     * Elemento de mayor prioridad.
      */
     @SuppressWarnings("unchecked")
     public T extraerMaximo() {
@@ -59,7 +59,7 @@ public class ColaPrioridad<T extends Comparable<T>> {
     /**
      * Consulta el elemento de mayor prioridad sin retirarlo.
      *
-     * @return Elemento de mayor prioridad.
+     * Elemento de mayor prioridad.
      */
     @SuppressWarnings("unchecked")
     public T verMaximo() {
@@ -72,8 +72,8 @@ public class ColaPrioridad<T extends Comparable<T>> {
     /**
      * Obtiene un elemento por posicion.
      *
-     * @param indice Posicion en la cola ordenada.
-     * @return Elemento consultado.
+     * Posicion en la cola ordenada.
+     * Elemento consultado.
      */
     @SuppressWarnings("unchecked")
     public T obtener(int indice) {
@@ -86,8 +86,8 @@ public class ColaPrioridad<T extends Comparable<T>> {
     /**
      * Elimina la primera aparicion exacta del elemento indicado.
      *
-     * @param elemento Elemento a retirar.
-     * @return {@code true} si fue eliminado.
+     * Elemento a retirar.
+     * {@code true} si fue eliminado.
      */
     public boolean eliminarElemento(T elemento) {
         for (int i = 0; i < tamano; i++) {
@@ -103,14 +103,14 @@ public class ColaPrioridad<T extends Comparable<T>> {
     }
 
     /**
-     * @return {@code true} si no contiene elementos.
+     * {@code true} si no contiene elementos.
      */
     public boolean estaVacia() {
         return tamano == 0;
     }
 
     /**
-     * @return Numero de elementos almacenados.
+     * Numero de elementos almacenados.
      */
     public int tamano() {
         return tamano;

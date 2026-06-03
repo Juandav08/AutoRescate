@@ -2,8 +2,6 @@ package autorescate.model.funciones;
 
 /**
  * Cola circular propia para solicitudes ordinarias.
- *
- * @param <T> Tipo de elementos.
  */
 public class Cola<T> {
 
@@ -13,9 +11,7 @@ public class Cola<T> {
     private int fondo;
     private int tamano;
 
-    /**
-     * Construye una cola vacia.
-     */
+ 
     public Cola() {
         elementos = new Object[CAPACIDAD_INICIAL];
         frente = 0;
@@ -26,7 +22,7 @@ public class Cola<T> {
     /**
      * Agrega un elemento al final de la cola.
      *
-     * @param elemento Elemento a encolar.
+     * Elemento a encolar.
      */
     public void encolar(T elemento) {
         if (tamano == elementos.length) {
@@ -40,7 +36,7 @@ public class Cola<T> {
     /**
      * Retira el elemento del frente.
      *
-     * @return Elemento retirado.
+     * Elemento retirado.
      */
     @SuppressWarnings("unchecked")
     public T desencolar() {
@@ -57,7 +53,6 @@ public class Cola<T> {
     /**
      * Consulta el frente sin retirar.
      *
-     * @return Elemento del frente.
      */
     @SuppressWarnings("unchecked")
     public T verFrente() {
@@ -69,9 +64,6 @@ public class Cola<T> {
 
     /**
      * Obtiene un elemento por posicion logica sin retirarlo.
-     *
-     * @param indice Posicion desde el frente.
-     * @return Elemento consultado.
      */
     @SuppressWarnings("unchecked")
     public T obtener(int indice) {
@@ -83,9 +75,7 @@ public class Cola<T> {
 
     /**
      * Elimina la primera aparicion exacta del elemento indicado.
-     *
-     * @param elemento Elemento a eliminar.
-     * @return {@code true} si fue eliminado.
+  
      */
     public boolean eliminarElemento(T elemento) {
         boolean eliminado = false;
@@ -101,15 +91,13 @@ public class Cola<T> {
         return eliminado;
     }
 
-    /**
-     * @return {@code true} si esta vacia.
-     */
+
     public boolean estaVacia() {
         return tamano == 0;
     }
 
     /**
-     * @return Numero de elementos en la cola.
+     * Numero de elementos en la cola.
      */
     public int tamano() {
         return tamano;

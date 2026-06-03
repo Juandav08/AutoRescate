@@ -23,12 +23,12 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
     /**
      * Construye una solicitud de servicio.
      *
-     * @param id Identificador unico.
-     * @param cliente Cliente asociado.
-     * @param tipoServicio Tipo de servicio requerido.
-     * @param descripcion Descripcion del caso.
-     * @param ubicacion Ubicacion del incidente.
-     * @param prioridad Prioridad entre 1 y 10.
+     * Identificador unico.
+     * Cliente asociado.
+     * Tipo de servicio requerido.
+     * Descripcion del caso.
+     * Ubicacion del incidente.
+     * Prioridad entre 1 y 10.
      */
     public SolicitudServicio(String id, Cliente cliente, TipoServicio tipoServicio,
             String descripcion, String ubicacion, int prioridad) {
@@ -43,14 +43,14 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
     }
 
     /**
-     * @return {@code true} si la solicitud es critica.
+     * {@code true} si la solicitud es critica.
      */
     public boolean esCritica() {
         return prioridad > 3;
     }
 
     /**
-     * @return {@code true} si tiene tecnico y unidad asignados.
+     * {@code true} si tiene tecnico y unidad asignados.
      */
     public boolean tieneRecursosAsignados() {
         return tecnicoAsignado != null && unidadAsignada != null;
@@ -59,7 +59,7 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
     /**
      * Marca la solicitud como cerrada.
      *
-     * @param fechaCierre Fecha ISO de cierre.
+     * Fecha ISO de cierre.
      */
     public void cerrar(String fechaCierre) {
         estado = EstadoSolicitud.CERRADA;
@@ -78,56 +78,56 @@ public class SolicitudServicio implements Comparable<SolicitudServicio> {
         return Long.compare(otra.timestamp, timestamp);
     }
 
-    /** @return ID de solicitud. */
+    /** ID de solicitud. */
     public String getId() { return id; }
 
-    /** @return Cliente asociado. */
+    /** Cliente asociado. */
     public Cliente getCliente() { return cliente; }
 
-    /** @return Tipo de servicio. */
+    /** Tipo de servicio. */
     public TipoServicio getTipoServicio() { return tipoServicio; }
 
-    /** @return Estado actual. */
+    /** Estado actual. */
     public EstadoSolicitud getEstado() { return estado; }
 
-    /** @param estado Nuevo estado. */
+    /** Nuevo estado. */
     public void setEstado(EstadoSolicitud estado) { this.estado = estado; }
 
-    /** @return Prioridad. */
+    /** Prioridad. */
     public int getPrioridad() { return prioridad; }
 
-    /** @param prioridad Nueva prioridad. */
+    /** Nueva prioridad. */
     public void setPrioridad(int prioridad) { this.prioridad = prioridad; }
 
-    /** @return Descripcion del caso. */
+    /** Descripcion del caso. */
     public String getDescripcion() { return descripcion; }
 
-    /** @return Ubicacion del incidente. */
+    /** Ubicacion del incidente. */
     public String getUbicacion() { return ubicacion; }
 
-    /** @return Tecnico asignado. */
+    /** Tecnico asignado. */
     public Tecnico getTecnicoAsignado() { return tecnicoAsignado; }
 
-    /** @param tecnicoAsignado Tecnico asignado. */
+    /** Tecnico asignado. */
     public void setTecnicoAsignado(Tecnico tecnicoAsignado) {
         this.tecnicoAsignado = tecnicoAsignado;
     }
 
-    /** @return Unidad asignada. */
+    /** Unidad asignada. */
     public UnidadServicio getUnidadAsignada() { return unidadAsignada; }
 
-    /** @param unidadAsignada Unidad asignada. */
+    /** Unidad asignada. */
     public void setUnidadAsignada(UnidadServicio unidadAsignada) {
         this.unidadAsignada = unidadAsignada;
     }
 
-    /** @return Timestamp de creacion. */
+    /** Timestamp de creacion. */
     public long getTimestamp() { return timestamp; }
 
-    /** @return Fecha ISO de cierre. */
+    /** Fecha ISO de cierre. */
     public String getFechaCierre() { return fechaCierre; }
 
-    /** @param fechaCierre Fecha ISO de cierre. */
+    /** Fecha ISO de cierre. */
     public void setFechaCierre(String fechaCierre) { this.fechaCierre = fechaCierre; }
 
     @Override
